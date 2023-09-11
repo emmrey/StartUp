@@ -75,7 +75,7 @@ with tab1:
     if st.button('PREDICT'):
 
         st.markdown("<br>", unsafe_allow_html= True)
-        prediction = model.predict(input_var)
+        prediction = model.predict(input_Var)
         st.write("Predicted Profit is :", prediction)
     else:
         st.write('Pls press the predict button for prediction')
