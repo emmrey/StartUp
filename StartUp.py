@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import numpy as np
 import sklearn
 import warnings
@@ -36,9 +36,9 @@ st.write("In the dynamic landscape of entrepreneurship, understanding and predic
 # correlation_data = data[['R&D Spend',	'Administration',	'Marketing Spend', 'Profit']]
 # sns.heatmap(correlation_data.corr(), annot = True, cmap = 'BuPu')
 
-st.write(heat_map)
-data.drop('Unnamed: 0', axis = 1, inplace = True)
-st.write(data.sample(10))
+# st.write(heat_map)
+# data.drop('Unnamed: 0', axis = 1, inplace = True)
+# st.write(data.sample(10))
 
 st.sidebar.image('pngwing.com (2).png', width= 300, caption= f"welcome {username}", use_column_width= True)
 
@@ -67,4 +67,29 @@ else:
 st.subheader("Your Inputed Data")
 input_Var = pd.DataFrame([{'R&D Spend': research, 'Administration': admin, 'Marketing Spend': marketing, 'State': states}])
 st.write(input_Var)
-    
+
+st.markdown("<br>", unsafe_allow_html= True)
+tab1, tab2 = st.tabs(["Prediction Pane", "Intepretation Pane"])
+
+with tab1:
+    if st.button('PREDICT'):
+
+        st.markdown("<br>", unsafe_allow_html= True)
+        prediction = model.predict(input_var)
+        st.write("Predicted Profit is :", prediction)
+    else:
+        st.write('Pls press the predict button for prediction')
+
+with tab2:
+    st.subheader('Model Interpretation')
+    st.write(f"Profit = {model.intercept_.round(2)} + {model.coef_[0].round(2)} R&D Spend + {model.coef_[1].round(2)} Administration + {model.coef_[2].round(2)} Marketing Spend")
+
+    st.markdown("<br>", unsafe_allow_html= True)
+
+    st.markdown(f"- The expected Profit for a startup is {model.intercept_}")
+
+    st.markdown(f"- For every additional 1 dollar spent on R&D Spend, the expected profit is expected to increase by ${model.coef_[0].round(2)}  ")
+
+    st.markdown(f"- For every additional 1 dollar spent on Administration Expense, the expected profit is expected to decrease by ${model.coef_[1].round(2)}  ")
+
+    st.markdown(f"- For every additional 1 dollar spent on Marketting Expense, the expected profit is expected to increase by ${model.coef_[2].round(2)}  ")  
